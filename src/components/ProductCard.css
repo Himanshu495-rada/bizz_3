@@ -1,0 +1,12 @@
+.card-img-top {
+  width: 200px;
+  height: 200px;
+  max-height: 200px;
+  max-width: 200px;
+}
+.card {
+  min-width: 200px;
+  min-height: 200px;
+  width: 400px;
+  height: 200px;
+}

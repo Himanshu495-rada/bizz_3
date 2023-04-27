@@ -1,7 +1,7 @@
 import React from 'react';
 import './ProductCard.css'
 import data from './data';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addCart, addCompare } from '../redux/actions';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,8 +34,8 @@ const ProductCard = ({ image, name, description, price, id }) => {
 
                 <hr />
                 <div className="card-body">
-                    <h5 className="card-title">{name}</h5>
-                    <p className="card-text">{description}</p>
+                    <h5 className="card-title text-center">{name.substring(0, 12)}...</h5>
+                    <p className="card-text text-center">{description.substring(0, 90)}...</p>
                     {/* <h6 className="card-subtitle mb-2 text-muted">${price}</h6> */}
                 </div>
             </div>

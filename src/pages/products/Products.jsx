@@ -33,7 +33,7 @@ export default function Products() {
                                     <ProductCard
                                         image={product.img}
                                         name={product.name}
-                                        description={product.description}
+                                        description={product.long_description}
                                         price={product.price}
                                         id={product.id}
                                     />

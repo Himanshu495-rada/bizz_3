@@ -13,11 +13,11 @@ export default function Cart() {
     const cartItems = cart.map((product) => (
         <div className="row align-items-center mb-3" key={product.id}>
             <div className="col-3">
-                <img src={product.img} alt={product.name} className="img-fluid" />
+                <img src={product.img} alt={product.name} className="img-fluid" width="100px" height="100px" />
             </div>
-            <div className="col-6">{product.name}</div>
+            <div className="col-3">{product.name}</div>
             <div className="col-3">${product.price.toFixed(2)}</div>
-            <div className="col-12">
+            <div className="col-3">
                 <button
                     type="button"
                     className="btn btn-danger btn-sm"
@@ -26,6 +26,7 @@ export default function Cart() {
                     Remove
                 </button>
             </div>
+            <hr />
         </div>
     ));
 
@@ -35,25 +36,29 @@ export default function Cart() {
     );
 
     return (
-        <div className="container">
+        <div className="container border">
+            <center>
+                <h2 className="mb-3">Cart</h2>
+            </center>
             <div className="row">
                 <div className="col">
-                    <h2 className="mb-3">Cart</h2>
                     {cart.length > 0 ? (
                         <>
                             {cartItems}
                             <div className="row">
                                 <div className="col-12">
-                                    <hr className="my-4" />
+
                                     <h5 className="mb-3">Total: ${totalPrice.toFixed(2)}</h5>
-                                    <button type="button" className="btn btn-primary">
+                                    <button type="button" className="btn btn-primary mb-3">
                                         Checkout
                                     </button>
                                 </div>
                             </div>
                         </>
                     ) : (
-                        <p>Your cart is empty</p>
+                        <center>
+                            <p>Your cart is empty</p>
+                        </center>
                     )}
                 </div>
             </div>

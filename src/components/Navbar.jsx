@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from "react-router-dom";
+import { Modal, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faCartShopping, faCodeCompare } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,6 +10,26 @@ export default function Navbar() {
 
     const cart = useSelector(state => state.handleCart);
     const compare = useSelector(state => state.handleCompare);
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [show, setShow] = useState(false);
+    const handleshow = () => setShow(true);
+    const handleshowhide = () => setShow(false);
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        // Handle login logic here
+    };
+
     return (
         <>
             <div className="container-fluid nav_bg">
@@ -38,10 +59,10 @@ export default function Navbar() {
                                         </li>
                                     </ul>
                                     <div className="buttons text-center">
-                                        <NavLink to="/login" className="btn btn-outline-secondary m-2">
+                                        <div className="btn btn-outline-secondary m-2" onClick={handleshow} >
                                             <FontAwesomeIcon icon={faRightToBracket} />
                                             Login
-                                        </NavLink>
+                                        </div>
                                         <NavLink to="/cart" className="btn btn-outline-primary m-2">
                                             <FontAwesomeIcon icon={faCartShopping} />
                                             Cart {cart.length}
@@ -57,6 +78,28 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleshowhide}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Login</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleLogin}>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange} />
+                        </Form.Group>
+
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit">
+                            Login
+                        </Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
         </>
     )
 }

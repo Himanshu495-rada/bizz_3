@@ -8,6 +8,7 @@ import About from './pages/about/About';
 import Contact from './pages/contact/Contact';
 import Cart from './pages/cart/Cart';
 import Compare from './pages/compare/Compare';
+import ProductDescription from './pages/productdescription/ProductDescription';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/contact" element={Contact()} />
         <Route path="/cart" element={Cart()} />
         <Route path="/compare" element={Compare()} />
+        <Route path="/productdescription/:id" element={<ProductDescription />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />

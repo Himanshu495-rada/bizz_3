@@ -136,6 +136,38 @@ const data = [
       "Formulated to resist mildew growth",
     ],
   },
+  {
+    id: 9,
+    qty: 1,
+    name: "Men's Crew Neck T-Shirt",
+    price: 900,
+    description: "Product description",
+    long_description:
+      "A classic, comfortable crew neck t-shirt made from soft cotton.",
+    img: "https://m.media-amazon.com/images/I/71Hr1QVKO9L._UL1500_.jpg",
+    category: "clothing",
+    features: [
+      "Available in a range of colors",
+      "machine washable",
+      "regular fit",
+    ],
+  },
+  {
+    id: 10,
+    qty: 1,
+    name: "Women's High-Waisted Skinny Jeans",
+    price: 1000,
+    description: "Product description",
+    long_description:
+      "Flattering and stylish high-waisted skinny jeans made from stretch denim",
+    img: "https://m.media-amazon.com/images/I/71Q4qtFF7jL._UL1500_.jpg",
+    category: "clothing",
+    features: [
+      "Available in different sizes and washes",
+      "ankle length",
+      "button and zip closure",
+    ],
+  },
 ];
 
 export default data;

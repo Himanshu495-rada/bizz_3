@@ -1,21 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from "react-router-dom";
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faCartShopping, faCodeCompare } from '@fortawesome/free-solid-svg-icons';
+import PocketBase from 'pocketbase';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function Navbar() {
+
+    //const pb = new PocketBase(process.env.REACT_APP_URL);
 
     const cart = useSelector(state => state.handleCart);
     const compare = useSelector(state => state.handleCompare);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [signupEmail, setSignupEmail] = useState('');
+    const [signupPassword, setSignupPassword] = useState('');
+
     const [show, setShow] = useState(false);
     const handleshow = () => setShow(true);
     const handleshowhide = () => setShow(false);
+
+    const [show2, setShow2] = useState(false);
+    const handleshow2 = () => setShow2(true);
+    const handleshow2hide = () => setShow2(false);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -25,10 +36,32 @@ export default function Navbar() {
         setPassword(e.target.value);
     };
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        // Handle login logic here
-    };
+    async function login() {
+        // await pb.collection('users').authWithPassword(
+        //     email,
+        //     password,
+        // );
+
+        // if (pb.authStore.isValid) {
+        //     toast("Logged in succesfully 🥳");
+        // }
+        toast("Not able to log in 😒");
+    }
+
+    const handleSignup = () => {
+        handleshowhide();
+        handleshow2();
+    }
+
+    const handleSubmit = () => {
+        console.log('a');
+    }
+
+    useEffect(() => {
+        // if (pb.authStore.isValid) {
+        //     toast("Logged in succesfully 🥳");
+        // }
+    }, [])
 
     return (
         <>
@@ -78,28 +111,82 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
+
             <Modal show={show} onHide={handleshowhide}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Login</Modal.Title>
+                    <Modal.Title>Login to manage your account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleLogin}>
-                        <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Email address</Form.Label>
+                    <Form onSubmit={login} className='mt-3' >
+                        <Form.Group controlId="formBasicEmail" >
+                            <Form.Label>Email address
+                                <Form.Label style={{ color: 'red' }} >*</Form.Label>
+                            </Form.Label>
                             <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange} />
                         </Form.Group>
 
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
+                        <Form.Group controlId="formBasicPassword" className='mt-3' >
+                            <Form.Label>Password
+                                <Form.Label style={{ color: 'red' }} >*</Form.Label>
+                            </Form.Label>
                             <Form.Control type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit">
+                        <Button variant="primary" type="submit" style={{ width: '100%' }} className='mt-3'>
                             Login
+                        </Button>
+
+                        <div className='text-center mt-3' >
+                            OR
+                        </div>
+
+                        <center>
+                            Don't have an account? <a className='primary' onClick={handleSignup} >Sign up here.</a>
+                        </center>
+
+
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+            <Modal show={show2} onHide={handleshow2hide}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sign up</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={handleSubmit} className='mt-3'>
+                        <Form.Group controlId="email">
+                            <Form.Label>Email address
+                                <Form.Label style={{ color: 'red' }} >*</Form.Label>
+                            </Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="Enter email"
+                                value={signupEmail}
+                                onChange={(e) => setSignupEmail(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group controlId="password" className='mt-3' >
+                            <Form.Label>Password
+                                <Form.Label style={{ color: 'red' }} >*</Form.Label>
+                            </Form.Label>
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                value={signupPassword}
+                                onChange={(e) => setSignupPassword(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Button variant="primary" type="submit" style={{ width: '100%' }} className='mt-3' >
+                            Sign up
                         </Button>
                     </Form>
                 </Modal.Body>
             </Modal>
+
+            <ToastContainer />
         </>
     )
 }

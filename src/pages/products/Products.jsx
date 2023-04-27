@@ -15,7 +15,7 @@ export default function Products() {
     return (
         <>
             <div className='my-5'>
-                <h1 className="text-center">Our Products</h1>
+                <h1 className="text-center">Featured Products</h1>
             </div>
             <div>
                 <center>

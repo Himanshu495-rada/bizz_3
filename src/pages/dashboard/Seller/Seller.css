@@ -1,0 +1,23 @@
+#title {
+  font-size: 30px;
+  color: white;
+}
+
+#cardBody {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+#formContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.productDetail:hover {
+  cursor: pointer;
+}

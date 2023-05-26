@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Modal, Button, Form, Row, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightToBracket, faCartShopping, faCodeCompare } from '@fortawesome/free-solid-svg-icons';
+import { faRightToBracket, faCartShopping, faCodeCompare, faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
 import PocketBase from 'pocketbase';
 import { ToastContainer, toast } from 'react-toastify';
+import Buyer from '../assets/customer_avatar.png';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function Navbar() {
 
-    //const pb = new PocketBase(process.env.REACT_APP_URL);
+    const pb = new PocketBase(process.env.REACT_APP_URL);
+    const navigate = useNavigate();
 
     const cart = useSelector(state => state.handleCart);
     const compare = useSelector(state => state.handleCompare);
@@ -21,7 +23,9 @@ export default function Navbar() {
     const [signupPassword, setSignupPassword] = useState('');
 
     const [show, setShow] = useState(false);
-    const handleshow = () => setShow(true);
+    const handleshow = () => {
+        navigate('/login');
+    };
     const handleshowhide = () => setShow(false);
 
     const [show2, setShow2] = useState(false);
@@ -37,15 +41,18 @@ export default function Navbar() {
     };
 
     async function login() {
-        // await pb.collection('users').authWithPassword(
-        //     email,
-        //     password,
-        // );
+        await pb.collection('users').authWithPassword(
+            email,
+            password,
+        );
 
-        // if (pb.authStore.isValid) {
-        //     toast("Logged in succesfully 🥳");
-        // }
-        toast("Not able to log in 😒");
+        if (pb.authStore.isValid) {
+            toast("Logged in succesfully 🥳");
+            openDashboard();
+            handleshowhide();
+        } else {
+            toast("Not able to log in 😒");
+        }
     }
 
     const handleSignup = () => {
@@ -57,15 +64,20 @@ export default function Navbar() {
         console.log('a');
     }
 
-    useEffect(() => {
-        // if (pb.authStore.isValid) {
-        //     toast("Logged in succesfully 🥳");
-        // }
-    }, [])
+    const openDashboard = () => {
+        //console.log(pb.authStore.model.name);
+        if (pb.authStore.model.name === 'Seller') {
+            navigate('/seller');
+        } else if (pb.authStore.model.name === 'Buyer') {
+            navigate('/buyer');
+        } else if (pb.authStore.model.name === 'Warehouse') {
+            navigate('/warehouse');
+        }
+    }
 
     return (
         <>
-            <div className="container-fluid nav_bg">
+            <div className="container-fluid nav_bg" id='NavBar' >
                 <div className="row">
                     <div className="col-10 mx-auto">
                         <nav className="navbar navbar-expand-lg navbar-light ">
@@ -92,10 +104,17 @@ export default function Navbar() {
                                         </li>
                                     </ul>
                                     <div className="buttons text-center">
-                                        <div className="btn btn-outline-secondary m-2" onClick={handleshow} >
-                                            <FontAwesomeIcon icon={faRightToBracket} />
-                                            Login
-                                        </div>
+                                        {pb.authStore.isValid ? (
+                                            < div className='btn btn-outline-secondary' onClick={openDashboard} >
+                                                <img src={Buyer} alt="" height="40px" width="40px" style={{ borderRadius: '20px' }} />
+                                            </div>
+                                        ) : (
+                                            <div className="btn btn-outline-secondary m-2" onClick={handleshow} >
+                                                <FontAwesomeIcon icon={faRightToBracket} />
+                                                Login
+                                            </div>
+                                        )}
+
                                         <NavLink to="/cart" className="btn btn-outline-primary m-2">
                                             <FontAwesomeIcon icon={faCartShopping} />
                                             Cart {cart.length}
@@ -109,30 +128,26 @@ export default function Navbar() {
                             </div>
                         </nav>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
 
             <Modal show={show} onHide={handleshowhide}>
                 <Modal.Header closeButton>
                     <Modal.Title>Login to manage your account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={login} className='mt-3' >
-                        <Form.Group controlId="formBasicEmail" >
-                            <Form.Label>Email address
-                                <Form.Label style={{ color: 'red' }} >*</Form.Label>
-                            </Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleEmailChange} />
-                        </Form.Group>
+                    <div className='mt-3' >
+                        <label htmlFor="email">
+                            Email address<label style={{ color: 'red' }} >*</label>
+                        </label>
+                        <input type="email" name='email' className="form-control" placeholder="Enter email" value={email} onChange={handleEmailChange} />
 
-                        <Form.Group controlId="formBasicPassword" className='mt-3' >
-                            <Form.Label>Password
-                                <Form.Label style={{ color: 'red' }} >*</Form.Label>
-                            </Form.Label>
-                            <Form.Control type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-                        </Form.Group>
+                        <label htmlFor="" className='mt-3' >
+                            Password<label style={{ color: 'red' }} >*</label>
+                        </label>
+                        <input type="password" className="form-control" placeholder="Password" value={password} onChange={handlePasswordChange} />
 
-                        <Button variant="primary" type="submit" style={{ width: '100%' }} className='mt-3'>
+                        <Button variant="primary" type="submit" style={{ width: '100%' }} className='mt-3' onClick={login} >
                             Login
                         </Button>
 
@@ -145,7 +160,7 @@ export default function Navbar() {
                         </center>
 
 
-                    </Form>
+                    </div>
                 </Modal.Body>
             </Modal>
 

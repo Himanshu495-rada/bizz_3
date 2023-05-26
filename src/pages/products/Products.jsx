@@ -1,29 +1,72 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductCard from '../../components/ProductCard';
+import { Form, FormControl, Container, Row, Col } from 'react-bootstrap';
+import './Products.css';
 
-import data from '../../components/data';
+import PocketBase from 'pocketbase';
 
 export default function Products() {
-    const categories = [...new Set(data.map((product) => product.category))];
 
-    const [products, setProducts] = useState(data);
+    const pb = new PocketBase(process.env.REACT_APP_URL);
 
-    const filterProducts = (category) => {
-        const newProducts = data.filter((product) => product.category === category);
+    const [products, setProducts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [categories, setCategories] = useState([...new Set(products.map((product) => product.category))]);
+
+    const filterProducts = async (category) => {
+        const records = await pb.collection('products').getFullList({
+            sort: '-created',
+        });
+        const newProducts = records.filter((product) => product.category === category);
         setProducts(newProducts);
     }
+
+    async function getProducts() {
+        const records = await pb.collection('products').getFullList({
+            sort: '-created',
+        });
+        setCategories([...new Set(records.map((product) => product.category))]);
+        setProducts(records);
+    }
+
+    const handleSearch = (event) => {
+        if (event.target.value === '') {
+            getProducts();
+            setSearchTerm('');
+        } else {
+            setSearchTerm(event.target.value);
+            const filteredProducts = products.filter((product) =>
+                product.name.toLowerCase().includes(event.target.value.toLowerCase())
+            );
+            setProducts(filteredProducts);
+        }
+
+    };
+
+    useEffect(() => {
+        getProducts();
+        console.log(products);
+    }, []);
+
     return (
         <>
             <div className='my-5'>
                 <h1 className="text-center">Featured Products</h1>
             </div>
-            <div>
-                <center>
-                    {categories.map((category, indx) => (
-                        <button className="btn btn-outline-primary mx-2 mb-3" key={indx} onClick={() => filterProducts(category)} >{category}</button>
-                    ))}
-                </center>
-            </div>
+            <Container>
+                <Row className='align-items-center' >
+                    <Col className='categories text-center' >
+                        {categories.map((category, indx) => (
+                            <button className="btn btn-outline-primary mx-2 mb-3" key={indx} onClick={() => filterProducts(category)} >{category}</button>
+                        ))}
+                    </Col>
+                    <Col className='text-end' >
+                        <Form className="mb-3 searchForm">
+                            <FormControl type="text" placeholder="Search Products" value={searchTerm} onChange={handleSearch} />
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
             <div className='container-fluid mb-5'>
                 <div className='row'>
                     <div className='col-10 mx-auto'>
@@ -31,9 +74,9 @@ export default function Products() {
                             {products.map((product, indx) => (
                                 <div className="col-md-4" key={product.id} >
                                     <ProductCard
-                                        image={product.img}
+                                        image={process.env.REACT_APP_URL + "/api/files/products/" + product.id + "/" + product.image}
                                         name={product.name}
-                                        description={product.long_description}
+                                        description={product.description}
                                         price={product.price}
                                         id={product.id}
                                     />

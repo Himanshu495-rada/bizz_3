@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Table } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { delCompare } from '../../redux/actions';
@@ -9,6 +9,8 @@ export default function Compare() {
     const products = useSelector(state => state.handleCompare);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const features = products.map((product) => product.features.split(';'));
 
     function handleProductDescription(id) {
         navigate(`/productdescription/${id}`);
@@ -36,7 +38,7 @@ export default function Compare() {
                                             {products.map((product) => (
                                                 <td key={product.id}>
                                                     <center>
-                                                        <img src={product.img} alt={product.name} width="200px" height="200px" onClick={() => handleProductDescription(product.id)} />
+                                                        <img src={process.env.REACT_APP_URL + "/api/files/products/" + product.id + "/" + product.image} alt={product.name} width="200px" height="200px" onClick={() => handleProductDescription(product.id)} />
                                                     </center>
                                                 </td>
                                             ))}
@@ -44,7 +46,7 @@ export default function Compare() {
                                         <tr>
                                             <td>Price</td>
                                             {products.map((product) => (
-                                                <td key={product.id}>${product.price}</td>
+                                                <td key={product.id}>₹{product.price}</td>
                                             ))}
                                         </tr>
                                         <tr>
@@ -58,7 +60,7 @@ export default function Compare() {
                                             {products.map((product) => (
                                                 <td key={product.id}>
                                                     <ul>
-                                                        {product.features.map((feature, index) => (
+                                                        {features.map((feature, index) => (
                                                             <li key={index}>{feature}</li>
                                                         ))}
                                                     </ul>
@@ -88,7 +90,7 @@ export default function Compare() {
                         </Row>
                     </Container>
                 ) : (
-                    <center className='mt-5' >
+                    <center className='my-5' >
                         <h4>No products added to compare.</h4>
                     </center>
                 )

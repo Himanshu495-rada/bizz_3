@@ -1,0 +1,14 @@
+.categoriesContainer {
+  flex-direction: row;
+}
+
+.categories {
+  display: block;
+  margin: 0 auto;
+}
+
+.searchForm {
+  text-align: center;
+  width: 200px;
+  margin: 0 auto;
+}

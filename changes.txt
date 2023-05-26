@@ -1,0 +1,12 @@
+1. Two logins buyer and seller with seperate dashboard✅
+2. Seller can add products and buyer can buy products✅
+3. Seller can see the orders and buyer can see the orders
+4. Signup page for seller and buyer, warehouse✅
+5. Seperate details for seller and warehouse accounts.
+6. Search button for products✅
+7. Remove animation✅
+8. Remove products from home and add categories with images.(medbuyer)✅
+9. Add "add to cart" button in product description.✅
+10. Buy now will add product to cart and display the cart page.✅
+11. Create sepeare footer.✅
+12. Make header fixed.✅

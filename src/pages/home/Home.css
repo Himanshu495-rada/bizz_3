@@ -1,5 +1,5 @@
 #header {
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 #header .btnCheckout {
@@ -18,4 +18,61 @@
 #header .btnCheckout:hover {
   background: #3498db;
   color: #fff;
+}
+
+h4 {
+  margin-left: 20px;
+}
+
+.d-flex {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+
+.horizontal-scrollable {
+  display: flex;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+}
+
+.cardImg {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  transition: filter 0.3s ease;
+}
+
+.product-card:hover .product-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(86, 86, 86, 0.5);
+}
+
+.product-name {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
 }

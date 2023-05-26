@@ -19,8 +19,7 @@ export default function About() {
       <h1 className="text-center">About</h1>
       <Row className="align-items-center">
         <Col md={6}>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, nisl et aliquam semper, velit quam euismod magna, quis faucibus sapien lacus sit amet nisi. Nam imperdiet faucibus ex. Sed vitae neque quis odio bibendum malesuada.</p>
-          <p>Nulla facilisi. Vestibulum non sapien ut tortor cursus venenatis ut vel quam. Morbi bibendum justo at lectus aliquet, nec molestie massa volutpat.</p>
+          <p>With digitization of physical markets, there has been a need for integration of multiple industries under one umbrella. We present to you Bizz 3 Solutions. Our mission is to provide you with best solutions that cater to your needs. Bizz 3 is a business aggregator platform wherein a wide range of options are available for buyers and sellers.</p>
         </Col>
         <Col md={6}>
           <Lottie options={defaultOptions}

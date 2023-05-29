@@ -6,10 +6,13 @@ import './Seller.css';
 import { ToastContainer, toast } from 'react-toastify';
 import marketingImg from '../../../assets/busy-marketing.svg';
 
+
 function Seller() {
 
   const pb = new PocketBase(process.env.REACT_APP_URL);
   const navigate = useNavigate();
+
+
 
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -141,6 +144,7 @@ function Seller() {
           ))}
         </ListGroup>
       </div>
+
       <ToastContainer />
 
       <Modal show={show} onHide={() => setShow(false)} >

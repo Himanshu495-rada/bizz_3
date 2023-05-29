@@ -3,23 +3,38 @@ import { Row, Col, Card, Form } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import PocketBase from 'pocketbase';
 
 export default function Checkout() {
 
+    const navigate = useNavigate();
+    const pb = new PocketBase(process.env.REACT_APP_URL);
     const cart = useSelector((state) => state.handleCart);
 
-    const totalPrice = cart.reduce(
-        (accumulator, product) => accumulator + product.price,
-        0
-    );
+    const totalPrice = cart.reduce((accumulator, product) => accumulator + product.price, 0);
 
-    function pay() {
-        alert("Feature not available yet");
+    async function placeOrder(order) {
+        const data = {
+            "product_id": order
+        };
+        await pb.collection('orders').create(data);
     }
 
-    function proceed() {
-        alert("Feature not available yet");
+    async function pay() {
+        try {
+            cart.forEach((product) => {
+                placeOrder(product.id);
+            })
+            toast("Order placed successfully 🥳❤️");
+            navigate('/');
+        } catch (error) {
+            toast("Something went wrong 😢");
+        }
+
     }
+
 
     return (
         <>
@@ -59,9 +74,12 @@ export default function Checkout() {
                                                 <option>Debit Card</option>
                                                 <option>Credit Card</option>
                                                 <option>Net Banking</option>
+                                                <option>UPI</option>
+                                                <option>Paypal</option>
+                                                <option>Stripe</option>
                                             </select>
                                         </div>
-                                        <button type="submit" className="btn btn-primary mt-2" onClick={proceed} >Proceed</button>
+
                                     </form>
                                 </Card.Body>
                             </Card>
@@ -76,7 +94,6 @@ export default function Checkout() {
                                 </Card.Header>
                                 <Card.Body>
                                     <table className="table table-bordered">
-
                                         <thead>
                                             <tr>
                                                 <th>Product</th>
@@ -114,6 +131,7 @@ export default function Checkout() {
                     </Col>
                 </Row>
             </div>
+            <ToastContainer />
         </>
     )
 }

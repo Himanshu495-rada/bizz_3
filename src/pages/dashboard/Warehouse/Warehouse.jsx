@@ -4,8 +4,52 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { Row, Col, Container, Card, ListGroup } from 'react-bootstrap';
 import './Warehouse.css';
+import { Line } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
 
 export default function Warehouse() {
+
+    const profitData = [3500, 4200, 3200, 3800, 3900, 4100, 3800, 4300, 3600, 4000, 3700, 3800, 4200, 3500, 4000, 4100, 3900, 4500, 3800, 4200, 3700, 3900, 3600, 4100, 4000, 3800, 4300, 3600, 4000, 4200];
+    const revenuData = [12000, 15000, 11000, 13000, 14000, 14500, 13000, 15500, 12500, 13500, 12800, 13000, 15000, 12000, 13500, 14500, 14000, 16000, 13000, 15000, 12800, 14000, 12500, 14500, 13500, 13000, 15500, 12500, 13500, 15000];
+    const financeData = [15000, 20000, 12000, 18000, 16000, 19000, 17000, 21000, 14000, 17000, 15000, 16000, 20000, 14000, 18000, 17000, 16000, 22000, 15000, 19000, 14000, 17000, 13000, 19000, 16000, 15000, 21000, 13000, 16000, 18000];
+    const days = Array.from({ length: 30 }, (_, index) => `Day ${index + 1}`);
+    const data = {
+        labels: days,
+        datasets: [
+            {
+                label: 'Profit',
+                data: profitData,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1,
+            },
+            {
+                label: 'Revenue',
+                data: revenuData,
+                fill: false,
+                borderColor: 'rgb(192, 75, 182)',
+                tension: 0.1,
+            },
+            {
+                label: 'Finance',
+                data: financeData,
+                fill: false,
+                borderColor: 'rgb(67, 161, 95)',
+                tension: 0.1,
+            }
+        ],
+    };
+    const options = {
+        scales: {
+            x: {
+                type: 'category',
+                title: {
+                    display: true,
+                    text: 'Days',
+                },
+            },
+        },
+    };
 
     const pb = new PocketBase(process.env.REACT_APP_URL);
     const navigate = useNavigate();
@@ -77,6 +121,10 @@ export default function Warehouse() {
                         </Card>
                     </Col>
                 </Row>
+
+                <div className='mt-5' >
+                    <Line data={data} options={options} />
+                </div>
 
                 <Row className='my-5' >
                     <Col lg={6}>

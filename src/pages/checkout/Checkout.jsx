@@ -118,7 +118,7 @@ export default function Checkout() {
                                         <tfoot>
                                             <tr>
                                                 <td colSpan="3">Total</td>
-                                                <td>${totalPrice.toFixed(2)}</td>
+                                                <td>₹{totalPrice.toFixed(2)}</td>
                                             </tr>
                                         </tfoot>
                                     </table>

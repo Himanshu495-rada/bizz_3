@@ -63,8 +63,19 @@ const ProductCard = ({ image, name, description, price, id }) => {
 
                 <div className="card-footer">
                     <div className="d-flex justify-content-center gap-2">
-                        <button className="btn btn-outline-secondary" onClick={buyNow} >Buy Now</button>
-                        <button className="btn btn-outline-primary" onClick={addToCart} >Add to Cart</button>
+                        {pb.authStore.isValid ? (
+                            <>
+                                <button className="btn btn-outline-secondary" onClick={buyNow} >Buy Now</button>
+                                <button className="btn btn-outline-primary" onClick={addToCart} >Add to Cart</button>
+                            </>
+                        ) : (
+                            <>
+                                <button className="btn btn-outline-secondary" onClick={buyNow} disabled >Buy Now</button>
+                                <button className="btn btn-outline-primary" onClick={addToCart} disabled >Add to Cart</button>
+                            </>
+                        )}
+
+
                         <button className="btn btn-outline-success" onClick={addToCompare} >Add to Compare</button>
                         {products.find((product) => product.id === id) ? (
                             <button className="btn btn-outline-success">Compare</button>

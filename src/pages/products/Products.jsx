@@ -40,8 +40,11 @@ export default function Products() {
             );
             setProducts(filteredProducts);
         }
-
     };
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     useEffect(() => {
         getProducts();
@@ -57,7 +60,7 @@ export default function Products() {
                 <Row className='align-items-center' >
                     <Col className='categories text-center' >
                         {categories.map((category, indx) => (
-                            <button className="btn btn-outline-primary mx-2 mb-3" key={indx} onClick={() => filterProducts(category)} >{category}</button>
+                            <button className="btn btn-outline-primary mx-2 mb-3" key={indx} onClick={() => filterProducts(category)} >{capitalizeFirstLetter(category)}</button>
                         ))}
                     </Col>
                     <Col className='text-end' >

@@ -8,7 +8,7 @@ export const Container = styled.div`
   overflow: hidden;
   width: 678px;
   max-width: 100%;
-  min-height: 400px;
+  min-height: 550px;
 `;
 
 export const SignUpContainer = styled.div`
@@ -23,7 +23,7 @@ export const SignUpContainer = styled.div`
   ${(props) =>
     props.signingIn !== true
       ? `
-  transform: translateX(100%);
+  transform: translateX(100%); 
 	opacity: 1;
 	z-index: 5;
 	`

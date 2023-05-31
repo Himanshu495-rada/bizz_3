@@ -12,6 +12,12 @@ export const delCart = (product) => {
   };
 };
 
+export const resetCart = () => {
+  return {
+    type: "RESET",
+  };
+};
+
 export const addCompare = (product) => {
   return {
     type: "ADDCOMPARE",

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './ProductCard.css'
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addCart, addCompare } from '../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import PocketBase from 'pocketbase';
 
 const ProductCard = ({ image, name, description, price, id }) => {
 
+    const products = useSelector(state => state.handleCompare);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -65,6 +66,10 @@ const ProductCard = ({ image, name, description, price, id }) => {
                         <button className="btn btn-outline-secondary" onClick={buyNow} >Buy Now</button>
                         <button className="btn btn-outline-primary" onClick={addToCart} >Add to Cart</button>
                         <button className="btn btn-outline-success" onClick={addToCompare} >Add to Compare</button>
+                        {products.find((product) => product.id === id) ? (
+                            <button className="btn btn-outline-success">Compare</button>
+                        ) : (null)
+                        }
                     </div>
                 </div>
             </div>

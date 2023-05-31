@@ -38,10 +38,9 @@ export default function Buyer() {
 
     return (
         <div className="container">
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-center">
                 <div></div>
                 <h1>Buyer Dashboard</h1>
-                <button className='btn btn-outline-danger' style={{ height: "40px" }} onClick={logout} >Logout</button>
             </div>
             <div>
                 <h3>Your Orders</h3>

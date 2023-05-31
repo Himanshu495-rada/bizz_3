@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Modal, Button, Form, Row, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket, faCartShopping, faCodeCompare, faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import PocketBase from 'pocketbase';
 import { ToastContainer, toast } from 'react-toastify';
 import Buyer from '../assets/customer_avatar.png';
@@ -75,6 +76,12 @@ export default function Navbar() {
         }
     }
 
+    const logout = () => {
+        pb.authStore.clear();
+        toast("Logged out succesfully 😢");
+        navigate('/');
+    }
+
     return (
         <>
             <div className="container-fluid nav_bg" id='NavBar' >
@@ -88,7 +95,7 @@ export default function Navbar() {
                                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="navbar-toggler-icon"></span>
                                 </button>
-                                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                                <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{ flexDirection: 'row' }} >
                                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                                         <li className="nav-item">
                                             <NavLink activeclassname="menu_active" className="nav-link " to="/">Home</NavLink>
@@ -105,8 +112,13 @@ export default function Navbar() {
                                     </ul>
                                     <div className="buttons text-center">
                                         {pb.authStore.isValid ? (
-                                            < div className='btn btn-outline-secondary' onClick={openDashboard} >
-                                                <img src={Buyer} alt="" height="40px" width="40px" style={{ borderRadius: '20px' }} />
+                                            < div className='btn btn-outline-secondary'>
+                                                <NavDropdown title={<img src={Buyer} alt="Buyer" style={{ width: '30px', height: '30px', borderRadius: '50%' }} />} id="basic-nav-dropdown" style={{ color: '#000' }} >
+                                                    <NavDropdown.Item onClick={() => navigate('/profile')}>Profile</NavDropdown.Item>
+                                                    <NavDropdown.Item onClick={openDashboard} >Dashboard</NavDropdown.Item>
+                                                    <NavDropdown.Divider />
+                                                    <NavDropdown.Item onClick={logout} >Logout</NavDropdown.Item>
+                                                </NavDropdown>
                                             </div>
                                         ) : (
                                             <div className="btn btn-outline-secondary m-2" onClick={handleshow} >

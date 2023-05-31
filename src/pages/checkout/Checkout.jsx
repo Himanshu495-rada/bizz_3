@@ -3,6 +3,7 @@ import { Row, Col, Card, Form } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useSelector, useDispatch } from "react-redux";
+import { resetCart } from '../../redux/actions';
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import PocketBase from 'pocketbase';
@@ -10,6 +11,7 @@ import PocketBase from 'pocketbase';
 export default function Checkout() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const pb = new PocketBase(process.env.REACT_APP_URL);
     const cart = useSelector((state) => state.handleCart);
 
@@ -28,6 +30,7 @@ export default function Checkout() {
                 placeOrder(product.id);
             })
             toast("Order placed successfully 🥳❤️");
+            dispatch(resetCart());
             navigate('/');
         } catch (error) {
             toast("Something went wrong 😢");

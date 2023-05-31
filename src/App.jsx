@@ -15,6 +15,8 @@ import Checkout from './pages/checkout/Checkout';
 import Buyer from './pages/dashboard/Buyer/Buyer';
 import Seller from './pages/dashboard/Seller/Seller';
 import Warehouse from './pages/dashboard/Warehouse/Warehouse';
+import Warehouse_2 from './pages/dashboard/Warehouse/warehouse_2';
+import ProfilePage from './pages/profile/profile';
 
 function App() {
   return (
@@ -33,7 +35,8 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/buyer" element={<Buyer />} />
         <Route path="/seller" element={<Seller />} />
-        <Route path="/warehouse" element={<Warehouse />} />
+        <Route path="/warehouse" element={<Warehouse_2 />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />

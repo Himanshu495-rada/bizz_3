@@ -102,10 +102,9 @@ function Seller() {
 
   return (
     <Container>
-      <div className="d-flex justify-content-between mt-4">
+      <div className="d-flex justify-content-center mt-4">
         <div></div>
         <h1>Seller Dashboard</h1>
-        <button className='btn btn-outline-danger' onClick={logout} style={{ height: "40px" }} >Logout</button>
       </div>
       <div>
         <Row>

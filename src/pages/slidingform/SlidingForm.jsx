@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import * as Components from "./Components";
-import './SlidingForm.css';
 import PocketBase from 'pocketbase';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -71,9 +70,24 @@ export default function SlidingForm() {
                                 <option value='Seller' >Seller</option>
                                 <option value='Warehouse' >Warehouse</option>
                             </Components.Select>
-                            <Components.Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                            <Components.Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                            <Components.Button onClick={signup} >Sign Up</Components.Button>
+                            {name === "Seller" ? (
+                                <>
+                                    <Components.Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <Components.Input type="text" placeholder='GST Number' />
+                                    <Components.Input type="text" placeholder='Company Name' />
+                                    <Components.Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                    <Components.Input type="password" placeholder="Confirm Password" />
+                                    <Components.Button onClick={signup} >Sign Up</Components.Button>
+                                </>
+                            ) : (
+                                <>
+                                    <Components.Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    <Components.Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                    <Components.Input type="password" placeholder="Confirm Password" />
+                                    <Components.Button onClick={signup} >Sign Up</Components.Button>
+                                </>
+                            )}
+
                         </Components.FormContainer>
                     </Components.SignUpContainer>
                     <Components.SignInContainer signingIn={signIn}>
